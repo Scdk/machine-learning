@@ -8,8 +8,6 @@
 
 #+TITLE: Relatório 2 - Regra de Hebb
 
-{{{ufu-header(Lucas Resende Carneiro, 11811ECP009, Keiji Yamanaka, Aprendizagem de Máquina, 24 de agosto de 2020)}}}
-
 * Introdução
 
 O neurônio de McCullock-Pitts, proposto em 1943, foi o primeiro modelo de neurônio artificial. Ele é uma simplificação
