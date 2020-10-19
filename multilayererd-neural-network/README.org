@@ -8,8 +8,6 @@
 
 #+TITLE: Relatório 5 - Redes de multicamadas com retropropação de erro
 
-{{{ufu-header(Lucas Resende Carneiro, 11811ECP009, Keiji Yamanaka, Aprendizado de Máquinas, 12 de setembro de 2020)}}}
-
 * Introdução
 
 Os resultados das funções desse relatório foram obtidos com base na seguinte tabela provida pelo professor:
@@ -212,7 +210,8 @@ ciclos ou um erro quadrático menor que o solicitado.
 Ao aplicar o treinamento em uma rede com 5 neurônios na camada escondida, para taxa de aprendizado de 0.1, 1000 ciclos
 e erro quadrático mínimo de 0.0001 obteve-se os seguintes pesos:
 
- | Pesos e bias da camada escondida |
+  *Pesos e bias da camada escondida:*
+
 
  | Pesos: [2.9514215 -2.4504688] | Bias: -2.5781941 |
  | Pesos: [-2.7489762 3.233215]        | Bias: -2.6790142 |
@@ -220,7 +219,9 @@ e erro quadrático mínimo de 0.0001 obteve-se os seguintes pesos:
  | Pesos: [2.433608 2.6610575]  | Bias: 2.5115561 |
  | Pesos: [2.99594 -2.50141]    | Bias: -2.6279352 |
 
- |Pesos e bias da camada escondida|
+
+ *Pesos e bias da camada escondida:*
+ 
  
 |Pesos: [1.3210002 3.1485379 1.8491082 1.1586045 2.0722046] | Bias: 1.3965353 
 
@@ -279,7 +280,9 @@ aumentar a quantidade de neurônios na camada escondida e o número de ciclos au
 |Expected: 1 | Result 0.9590138 
 |Expected: -1 | Result -0.9538826 
 
- |Weights and bias of the hiden layer| 
+
+ *Weights and bias of the hiden layer:* 
+ 
  
 |Weights: [2.9514215 -2.4504688] | b: -2.5781941 
 |Weights: [-2.7489762 3.233215] | b: -2.6790142 
@@ -287,7 +290,9 @@ aumentar a quantidade de neurônios na camada escondida e o número de ciclos au
 |Weights: [2.433608 2.6610575] | b: 2.5115561 
 |Weights: [2.99594 -2.50141] | b: -2.6279352 
 
- |Weights and bias of the exit layer|
+
+ *Weights and bias of the exit layer:*
+ 
  
 |Weights: [1.3210002 3.1485379 1.8491082 1.1586045 2.0722046] | b: 1.3965353 
 
@@ -298,7 +303,9 @@ aumentar a quantidade de neurônios na camada escondida e o número de ciclos au
 |Expected: 1 | Result 0.9918879 
 |Expected: -1 | Result -0.99763787 
 
- |Weights and bias of the hiden layer
+
+ *Weights and bias of the hiden layer:*
+ 
  
 |Weights: [3.203272 -4.219955] | b: -3.1515963 
 |Weights: [-4.199405 3.174768] | b: -3.128478 
@@ -306,6 +313,8 @@ aumentar a quantidade de neurônios na camada escondida e o número de ciclos au
 |Weights: [2.931099 -4.0561976] | b: -2.886259 
 |Weights: [2.6811938 2.6778238] | b: 3.9665596 
 
- |Weights and bias of the exit layer
+
+ *Weights and bias of the exit layer:*
+ 
  
 |Weights: [4.031347 2.9809232 2.8429143 1.7927235 2.2010393] | b: 3.552816 
