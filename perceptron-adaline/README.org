@@ -8,8 +8,6 @@
 
 #+TITLE: Relatório 3 - Perceptron e Adaline
 
-{{{ufu-header(Lucas Resende Carneiro, 11811ECP009, Keiji Yamanaka, Aprendizagem de Máquina, 30 de agosto de 2020)}}}
-
 * Introdução
 
 Os resultados das funções desse relatório são feitos com base a seguinte base da dados provida pelo professor:
