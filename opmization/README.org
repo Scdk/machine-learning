@@ -8,8 +8,6 @@
 
 #+TITLE: Relatório 8 - Evolução diferencial
 
-{{{ufu-header(Lucas Resende Carneiro, 11811ECP009, Keiji Yamanaka, Aprendizado de Máquinas, 20 de setembro de 2020)}}}
-
 * Introdução
 
 A optimização é o processo de buscar técnicas para seleção das melhores alternativas, tornar ótimo, alcançar os objetivos
