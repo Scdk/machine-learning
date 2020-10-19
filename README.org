@@ -8,7 +8,7 @@
 
 #+TITLE: Machine Learning
 
-A repository of the assignments of the discipline Marchine Learning 2020-1.
+A repository of the assignments of the discipline Machine Learning 2020-1.
 
 ** [[file:hebb-rule/][Hebb's Rule]]
 
