@@ -8,8 +8,6 @@
 
 #+TITLE: Relatório 6 - Engenharia de características
 
-{{{ufu-header(Lucas Resende Carneiro, 11811ECP009, Keiji Yamanaka, Aprendizado de Máquinas, 20 de setembro de 2020)}}}
-
 * Introdução
 
 Os resultados desse relatório foram obtidos com base no arquivo sonal.all-data encontrado na base de dados do UCI:
@@ -256,6 +254,7 @@ Seguem abaixo alguns resultados encontrados:
 |Expected: 1 | Result 0.8292868 
 |Expected: 0 | Result 0.26734316 
 
+
 |Accuracy: 88.10%
 ** Número máximo de ciclos = 1000 e número de neurônios na camada escondida = 20
 |Expected: 0 | Result 0.29759264 
@@ -302,6 +301,7 @@ Seguem abaixo alguns resultados encontrados:
 |Expected: 1 | Result 0.8827714 
 |Expected: 0 | Result 0.13099527 
 
+
 |Accuracy: 85.71%
 ** Número máximo de ciclos = 10000 e número de neurônios na camada escondida = 20
 |Expected: 0 | Result 0.59114504 
@@ -347,6 +347,7 @@ Seguem abaixo alguns resultados encontrados:
 |Expected: 0 | Result 0.16862309 
 |Expected: 1 | Result 0.9986986 
 |Expected: 0 | Result 0.68375266 
+
 
 |Accuracy: 73.81%
 
