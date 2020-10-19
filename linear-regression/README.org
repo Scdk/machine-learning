@@ -8,8 +8,6 @@
 
 #+TITLE: Relatório 4 - Regressão linear
 
-{{{ufu-header(Lucas Resende Carneiro, 11811ECP009, Keiji Yamanaka, Aprendizado de Máquinas, 6 de setembro de 2020)}}}
-
 * Introdução
 
 Os resultados das funções desse relatório foram obtidos com base na seguinte tabela provida pelo professor:
@@ -218,7 +216,8 @@ já que r > 0 e também forte, já que o coeficiente de determinação é igual 
 |Expected output: 11.58 | Obtained output: 11.52 
 |Expected output: 12.55 | Obtained output: 12.52 
 
-|Weight: 2.017005    || b: 2.4392002 
+
+|Weight: 2.017005    | b: 2.4392002 
 
 ** Comparação entre os resultados obtidos utilizando  a e b  e os esperados
 
@@ -233,6 +232,7 @@ já que r > 0 e também forte, já que o coeficiente de determinação é igual 
 |Expected output: 10.87 | Obtained output: 10.48 
 |Expected output: 11.58 | Obtained output: 11.48 
 |Expected output: 12.55 | Obtained output: 12.48 
+
 
 |a = 2.0058184 | b = 2.4518175|
 
@@ -250,7 +250,10 @@ já que r > 0 e também forte, já que o coeficiente de determinação é igual 
 |Expected output: 11.48 | Obtained output: 11.52 
 |Expected output: 12.48 | Obtained output: 12.52 
 
+
 |a = 2.0058184 | b = 2.4518175|
+
+
 |Weight: 2.017005    | b: 2.4392002|
 
 * Bibliografia
