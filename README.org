@@ -1,0 +1,25 @@
+#+SETUPFILE: "~/lucas-template.org"
+
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+OPTIONS: author:nil broken-links:nil c:nil creator:nil
+#+OPTIONS: d:(not "LOGBOOK") date:nil e:t email:nil f:t inline:t num:t
+#+OPTIONS: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+OPTIONS: timestamp:t title:t toc:nil todo:t |:t 
+
+#+TITLE: Machine Learning
+
+A repository of the assignments of the discipline Marchine Learning 2020-1.
+
+** [[file:hebb-rule/][Hebb's Rule]]
+
+** [[file:perceptron-adaline/][Perceptron and Adaline]]
+
+** [[file:linear-regression/][Linear Regression]]
+
+** [[file:multilayererd-neural-network/][Multilayer Perceptron]]
+
+** [[file:feature-engineering/][Feature Engineering]]
+
+** [[file:clustering/][Clustering]]
+
+** [[file:optimization/][Optimization]]

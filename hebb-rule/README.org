@@ -1,0 +1,225 @@
+#+SETUPFILE: "~/lucas-template.org"
+
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+OPTIONS: author:nil broken-links:nil c:nil creator:nil
+#+OPTIONS: d:(not "LOGBOOK") date:nil e:t email:nil f:t inline:t num:t
+#+OPTIONS: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+OPTIONS: timestamp:t title:t toc:nil todo:t |:t 
+
+#+TITLE: Relatório 2 - Regra de Hebb
+
+{{{ufu-header(Lucas Resende Carneiro, 11811ECP009, Keiji Yamanaka, Aprendizagem de Máquina, 24 de agosto de 2020)}}}
+
+* Introdução
+
+O neurônio de McCullock-Pitts, proposto em 1943, foi o primeiro modelo de neurônio artificial. Ele é uma simplificação
+do que sabia à respeito do neurônio biológico na época e consiste de diversas entradas 
+(x_1 a x_n) ligadas a um núcleo Y, cada uma das ligações das entradas ao núcleo possuem um peso (w_1 a w_n), que podem
+ser excitatórias, caso w_i > 0, ou inibitórias caso w_i < 0.
+
+No núcleo, tem-se uma função de saída f(y_1) que, no caso de uma função degrau, compara um limiar Ø com a soma de
+um elemento bias (b) com a somatória das entradas vezes o peso de suas ligações ao núcleo, caso a soma seja maior ou
+igual ao limiar a função retorna 1, caso seja menor ela retorna 0.
+
+Neste relatório deseja-se treinar um neurônio de McCulock-Pitts utilizando a Regra de Hebb que é uma regra proposta pelo
+neuropsicólogo Donald Hebb e baseada nos experimentos de Pavlov. A regra propõe que o condicionamento de neurônios 
+promove alterações nas suas estrutura sináptica. Essas alterações, por vez, aumentam a eficiência sináptica dos neurônios. 
+A alteração na eficiência sináptica é chamada de plasticidade sináptica e a plasticidade sináptica resulta em um modelo de
+aprendizado.
+
+O modelo de aprendizado se baseia na afirmação de que a variação do peso de uma ligação é igual a sua entrada (x) vezes a
+resposta desejada (t). Usa-se disso e do conhecimento de que a variação de b é igual a t para ajustar os valores de w e b
+de modo que se consiga a saída desejada. 
+
+* Objetivo
+
+- Treinar um neurônio de McCulock-Pitts utilizando a regra de Hebb para que esse realize 14 das 16 operações lógicas
+ possíveis com duas entradas usando a representação bipolar.
+
+* Desenvolvimento
+
+Para realizar o treinamento do neurônio artificial foi escolhida a linguagem Common Lisp. A escolha da linguagem
+forçou uma abordagem um pouco diferente da apresentada no exemplo dado, visto que, foi utilizada uma abordagem
+essencialmente funcional e o exemplo foi feito em uma linguagem procedural.
+
+Primariamente foi observado que a formula do cálculo de b é muito semelhante à do calculo dos pesos, tento como
+diferença apenas que no caso do b seu valor valor anterior não é multiplicado pela entrada. Tendo isso em mente foi criada
+uma função que calcula tanto os pesos quanto o b. Para que essa função funcione é necessário adicionar mais uma entrada
+no valor de 1, que seria a entrada do calculo de b. Efetivamente, fazendo com que a entrada multiplicando b seja 1, e portanto
+com que o novo valor de b seja o b antigo vezes 1 mais a saída, ou seja b mais a saída, assim como desejado.
+
+#+BEGIN_EXAMPLE lisp
+(defun ajuste-peso (entradas pesos saida)
+  (map 'list #'+ pesos
+       (map 'list #'(lambda (x) (* x saida)) entradas)))
+#+END_EXAMPLE
+
+Após a criação dessa função foi feita uma função recursiva  que permite a entrada de uma lista de entradas e saídas, para que
+assim se consiga obter os pesos e o b ajustados finais
+
+#+BEGIN_EXAMPLE lisp
+(defun treinamento (entradas pesos saidas)
+  (if (and (null entradas) (null  saidas)) pesos
+      (treinamento
+       (rest entradas)
+       (ajuste-peso (first entradas) pesos (first saidas))
+       (rest saidas))))
+#+END_EXAMPLE
+
+Como citado anteriormente o resultado da função anterior é uma lista com os dois pesos e o b. Para que fosse possível
+utilizá-los separadamente foram criadas duas funções:
+
+#+BEGIN_EXAMPLE lisp
+(defun w-separated (pesos-ajustados)
+  (butlast pesos-ajustados))
+(defun b-separated (pesos-ajustados)
+ (last pesos-ajustados))
+#+END_EXAMPLE
+
+Tendo isso pronto a parte do treinamento do neurônio estava finalizada. Foi necessário, então, criar as funções que
+comparariam a saída desejada com a saída obtida com os novos pesos e o novo b . Primeiro foi criada uma função para
+realizar o calculo da soma de b com a somatória das entradas vezes os pesos
+
+#+BEGIN_EXAMPLE lisp
+(defun soma (pesos-ajustados entrada)
+  (+ (first (b-separated pesos-ajustados))
+     (apply #'+ (map 'list  #'* (w-separated pesos-ajustados) (w-separated entrada)))))
+#+END_EXAMPLE
+
+Com a função de soma criada o próximo passo foi a criação da função degrau.
+
+#+BEGIN_EXAMPLE lisp
+(defun degrau (entrada pesos-ajustados limiar)
+  (if (>= (soma pesos-ajustados entrada) limiar) 1 -1))
+#+END_EXAMPLE
+
+Por fim, foi criada uma função que testava se os pesos e b ajustados produziam as saídas esperadas.
+
+#+BEGIN_EXAMPLE lisp
+(defun compara-saidas (entradas pesos saidas limiar)
+  (compara-saidas-aux entradas (treinamento entradas pesos saidas) saidas limiar '()))
+(defun compara-saidas-aux (entradas pesos saidas limiar resultado)
+  (cond
+    ((null entradas) (format t "Pesos: [~{~a~^ ~}] || b: ~a ~%"
+			     (w-separated pesos)
+			     (first (b-separated pesos))))
+    (t
+     (format t "Saída esperada:  ~a || Saída obtida: ~a ~%"
+	     (first saidas)
+	     (degrau (first entradas) pesos limiar))
+     (compara-saidas-aux (rest entradas) pesos (rest saidas) limiar
+		       (append resultado
+			       (list (degrau (first entradas) pesos limiar)))))))
+#+END_EXAMPLE
+
+* Conclusão
+
+A regra de Hebb e o neurônio de McCulock-Pitts são modelos simples que preparam para conceitos complexos a vir, 
+entretanto mesmo com essa simplicidade foi possível treinar de maneira correta o neurônio artificial e obter as 14 saídas
+corretas de 16. Tendo apresentado erro somente  no treinamento das funções lógicas XOR E XNOR. Segue na próxima
+sessão os resultados apresentados pelo código.
+
+* Resultados
+
+#+LATEX: \twocolumn
+#+BEGIN_EXAMPLE
+
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  -1 || Saída obtida: -1 
+Pesos: [0 0] || b: -4 
+
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  1 || Saída obtida: 1 
+Pesos: [-2 -2] || b: -2 
+
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  -1 || Saída obtida: -1 
+Pesos: [2 -2] || b: -2 
+
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  1 || Saída obtida: 1 
+Pesos: [0 -4] || b: 0 
+
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  -1 || Saída obtida: -1 
+Pesos: [-2 2] || b: -2 
+
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  1 || Saída obtida: 1 
+Pesos: [-4 0] || b: 0 
+
+Saída esperada:  -1 || Saída obtida: 1 
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  -1 || Saída obtida: 1 
+Pesos: [0 0] || b: 0 
+
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  1 || Saída obtida: 1 
+Pesos: [-2 -2] || b: 2 
+
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  -1 || Saída obtida: -1 
+Pesos: [2 2] || b: -2 
+
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  -1 || Saída obtida: 1 
+Saída esperada:  -1 || Saída obtida: 1 
+Saída esperada:  1 || Saída obtida: 1 
+Pesos: [0 0] || b: 0 
+
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  -1 || Saída obtida: -1 
+Pesos: [4 0] || b: 0 
+
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  1 || Saída obtida: 1 
+Pesos: [2 -2] || b: 2 
+
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  -1 || Saída obtida: -1 
+Pesos: [0 4] || b: 0 
+
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  -1 || Saída obtida: -1 
+Saída esperada:  1 || Saída obtida: 1 
+Pesos: [-2 2] || b: 2 
+
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  -1 || Saída obtida: -1 
+Pesos: [2 2] || b: 2 
+
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  1 || Saída obtida: 1 
+Saída esperada:  1 || Saída obtida: 1 
+Pesos: [0 0] || b: 4 
+#+END_EXAMPLE
+
+
+
